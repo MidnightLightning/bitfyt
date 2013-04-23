@@ -40,6 +40,8 @@ class RandomSource {
 	 * 4   | 32 |                    65,535
 	 * 2   | 64 |                       255
 	 * 1   | 128 |                       15
+	 *
+	 * @return string Random number, output as a string, because it may be quite large
 	 */
 	function get() {
 		$rs = $this->pieces[$this->cursor++];
@@ -53,13 +55,16 @@ class RandomSource {
 	 * Return a number between $min and $max rather than between zero and the max of the current block size
 	 * @param int $min
 	 * @param int $max
+	 * @return string Random number, output as a fraction represented as a string, because it may be quite large
 	 */
 	function getRange($min, $max) {
 		$r = $this->get();
-		$max_value = pow(2, $this->out_size*4)-1;
-		$range = $max-$min;
-		if ($range > $max_value) throw new InvalidArgumentException("Can't get a number in the range {$min} to {$max} since that range ({$range}) is greater than the current output range ({$max_value})");
-		return ($r/$max_value)*$range + $min;
+		bcscale(10); // Allow fractions
+		$max_value = bcsub(bcpow(2, $this->out_size*4, 0), '1', 0);
+		$range = bcsub($max, $min);
+		if (bccomp($range, $max_value) == 1) throw new InvalidArgumentException("Can't get a number in the range {$min} to {$max} since that range ({$range}) is greater than the current output range ({$max_value})");
+		$frac = bcdiv($r, $max_value);
+		return bcadd($min, bcmul($frac, $range));
 	}
 	
 	function peek() {
@@ -81,8 +86,20 @@ class RandomSource {
 		$pieces = str_split($this->raw, $this->out);
 		$final = array();
 		foreach($pieces as $piece) {
-			$final[] = hexdec($piece);
+			$final[] = $this->_bigHexDec($piece);
 		}
 		$this->pieces = $pieces;
+	}
+	
+	private function _bigHexDec($hex) {
+		$dec = '0';
+		$len = strlen($hex);
+		bcscale(0); // dealing with integers only
+		for ($i=1; $i<= $len; $i++) {
+			$hex_value = hexdec($hex[$i]);
+			$place_value = bcpow('16', strval($len - $i));
+			$dec = bcadd($dec, bcmul($hex_value, $place_value));
+		}
+		return $dec;
 	}
 }
