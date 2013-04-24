@@ -47,7 +47,7 @@ class RandomSource {
 	 */
 	function get() {
 		$rs = $this->pieces[$this->cursor++];
-		if ($this->cursor > count($this->pieces)) $this->_init(); // If we've run out of numbers, create some more
+		if ($this->cursor >= count($this->pieces)) $this->_init(); // If we've run out of numbers, create some more
 		return $rs;
 	}
 	
