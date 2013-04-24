@@ -1,4 +1,6 @@
 <?php
+namespace BitWarrior;
+
 /**
  * A source of random numbers, that come from a deterministic source
  *
@@ -74,7 +76,8 @@ class RandomSource {
 	function getState() {
 		return array(
 			'cursor' => $this->cursor,
-			'raw' => $this->raw
+			'raw' => $this->raw,
+			'pieces' => $this->pieces,
 		);
 	}
 	
@@ -88,16 +91,17 @@ class RandomSource {
 		foreach($pieces as $piece) {
 			$final[] = $this->_bigHexDec($piece);
 		}
-		$this->pieces = $pieces;
+		$this->pieces = $final;
 	}
 	
 	private function _bigHexDec($hex) {
+		if ($hex == '') return '0';
 		$dec = '0';
 		$len = strlen($hex);
 		bcscale(0); // dealing with integers only
-		for ($i=1; $i<= $len; $i++) {
+		for ($i=0; $i<$len; $i++) {
 			$hex_value = hexdec($hex[$i]);
-			$place_value = bcpow('16', strval($len - $i));
+			$place_value = bcpow('16', strval($len - $i-1));
 			$dec = bcadd($dec, bcmul($hex_value, $place_value));
 		}
 		return $dec;
