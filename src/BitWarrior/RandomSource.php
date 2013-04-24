@@ -62,9 +62,9 @@ class RandomSource {
 	function getRange($min, $max) {
 		$r = $this->get();
 		bcscale(10); // Allow fractions
-		$max_value = bcsub(bcpow(2, $this->out_size*4, 0), '1', 0);
+		$max_value = bcsub(bcpow(2, $this->out*4, 0), '1', 0);
 		$range = bcsub($max, $min);
-		if (bccomp($range, $max_value) == 1) throw new InvalidArgumentException("Can't get a number in the range {$min} to {$max} since that range ({$range}) is greater than the current output range ({$max_value})");
+		if (bccomp($range, $max_value) == 1) throw new \InvalidArgumentException("Can't get a number in the range {$min} to {$max} since that range ({$range}) is greater than the current output range ({$max_value})");
 		$frac = bcdiv($r, $max_value);
 		return bcadd($min, bcmul($frac, $range));
 	}
