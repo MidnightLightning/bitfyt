@@ -1,7 +1,7 @@
 <?php
 require(__DIR__.'/../vendor/autoload.php'); // Composer autoload
 
-$n = new BitWarrior\RandomSource('','', 2);
+$n = new BitFyt\RandomSource('','', 2);
 
 $min = 9999999999999999999999;
 $max = 0;

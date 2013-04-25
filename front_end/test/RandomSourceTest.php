@@ -1,5 +1,5 @@
 <?php
-use \BitWarrior\RandomSource;
+use \BitFyt\RandomSource;
 
 class RandomSourceTest extends \PHPUnit_Framework_TestCase {
 

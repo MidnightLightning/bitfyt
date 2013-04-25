@@ -4,6 +4,6 @@
 		"twig/twig": ">=1.8,<2.0-dev"
 	},
 	"autoload": {
-		"psr-0": {"BitWarrior": "src/"}
+		"psr-0": {"BitFyt": "src/"}
 	}
 }

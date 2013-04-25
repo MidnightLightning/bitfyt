@@ -1,5 +1,5 @@
 <?php
-namespace BitWarrior;
+namespace BitFyt;
 
 /**
  * A source of random numbers, that come from a deterministic source
