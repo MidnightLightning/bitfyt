@@ -1,4 +1,5 @@
 nbproject
-vendor
-composer.lock
-.sass-cache
+front_end/vendor
+front_end/composer.lock
+front_end/.sass-cache
+back_end/node_modules

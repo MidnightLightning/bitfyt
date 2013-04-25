@@ -1,0 +1,10 @@
+{
+	"name":"bw-btc",
+	"description":"Connect to the Bitcoin P2P network and provide Socket API endpoints",
+	"version":"0.0.1",
+	"private":true,
+	"dependencies":{
+		"connect":"",
+		"mongodb":""
+	}
+}
