@@ -7,6 +7,7 @@ io = io.listen(server);
 var Bitcoin = require('bitcoinjs');
 node = new Bitcoin.Node();
 node.start();
+
 var chain = node.getBlockChain();
 chain.addListener('txSave', function(e) {
   console.log(e);

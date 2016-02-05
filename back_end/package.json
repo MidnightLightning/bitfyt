@@ -6,7 +6,7 @@
 	"dependencies":{
 		"connect":"",
 		"mongodb":"",
-		"bitcoinjs":"",
+		"bitcoinjs":"git://github.com/bitcoinjs/bitcoinjs-server.git",
 		"socket.io":""
 	}
 }
